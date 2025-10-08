@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Song</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { margin-top: 20px; }
+        input { margin: 5px; padding: 6px; }
+        button { padding: 6px 12px; }
+    </style>
+</head>
+<body>
+    <h1>Edit Song</h1>
+
+    <form th:action="@{'/updateSong/' + ${song.songId}}" method="post" th:object="${song}">
+        <input type="text" th:field="*{songName}" placeholder="Song Name" required />
+        <input type="text" th:field="*{lyricist}" placeholder="Lyricist" />
+        <input type="text" th:field="*{singer}" placeholder="Singer" />
+        <input type="text" th:field="*{musicDirector}" placeholder="Music Director" />
+        <button type="submit">Update Song</button>
+    </form>
+
+    <br>
+    <a href="/">Back to Playlist</a>
+</body>
+</html>

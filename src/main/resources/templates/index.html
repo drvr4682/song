@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Playlist Manager</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 80%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f4f4f4; }
+        form { margin-top: 20px; }
+        input { margin: 5px; padding: 6px; }
+        button { padding: 6px 12px; }
+    </style>
+    <script>
+        function confirmDelete(songId) {
+            if(confirm("Are you sure you want to delete this song?")) {
+                window.location.href = '/deleteSong/' + songId;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>🎵 My Playlist</h1>
+
+    <!-- Add Song Form -->
+    <form th:action="@{/addSong}" method="post" th:object="${song}">
+        <input type="text" th:field="*{songName}" placeholder="Song Name" required />
+        <input type="text" th:field="*{lyricist}" placeholder="Lyricist" />
+        <input type="text" th:field="*{singer}" placeholder="Singer" />
+        <input type="text" th:field="*{musicDirector}" placeholder="Music Director" />
+        <button type="submit">Add Song</button>
+    </form>
+
+    <!-- Song List -->
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Song</th>
+            <th>Lyricist</th>
+            <th>Singer</th>
+            <th>Music Director</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="s : ${songs}">
+            <td th:text="${s.songId}"></td>
+            <td th:text="${s.songName}"></td>
+            <td th:text="${s.lyricist}"></td>
+            <td th:text="${s.singer}"></td>
+            <td th:text="${s.musicDirector}"></td>
+            <td>
+                <a th:href="@{'/editSong/' + ${s.songId}}">Edit</a> |
+                <a href="javascript:void(0)" th:onclick="'confirmDelete(' + ${s.songId} + ')'">Delete</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
